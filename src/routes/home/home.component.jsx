@@ -1,4 +1,3 @@
-import { Routes, Route } from "react-router-dom"
 import Directory from "../../components/directory/directory.component"
 
 const categories = [
@@ -34,5 +33,4 @@ const Home = () => {
         <Directory categories={categories} />
     )
 }
-
 export default Home
