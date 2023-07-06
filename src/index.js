@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { UserProvider } from './context/user.context';
-import { ProductsProvider } from './context/products.context';
+import { CategoriesProvider } from './context/category.context';
 import { CartProvider } from './context/cart.context';
 
 import './index.scss';
@@ -15,11 +15,11 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(
     <BrowserRouter>
         <UserProvider>
-            <ProductsProvider>
+            <CategoriesProvider>
                 <CartProvider>
                     <App />
                 </CartProvider>
-            </ProductsProvider>
+            </CategoriesProvider>
         </UserProvider>
     </BrowserRouter>
 );
