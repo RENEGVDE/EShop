@@ -3,7 +3,6 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import App from "./App";
-import { CategoriesProvider } from "./context/category.context";
 import { CartProvider } from "./context/cart.context";
 import { store } from "./store/store";
 
@@ -14,11 +13,9 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <CategoriesProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </CategoriesProvider>
+      <CartProvider>
+        <App />
+      </CartProvider>
     </BrowserRouter>
   </Provider>
 );
