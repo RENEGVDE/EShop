@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "./store/user/user.action";
+import { setUser } from "./store/user/user.reducer";
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
