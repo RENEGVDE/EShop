@@ -23,7 +23,7 @@ const PaymentForm = () => {
 
     setIsProcessingPayment(true);
 
-    const response = await fetch("/.functions/index", {
+    const response = await fetch("/api/payment", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

@@ -22,7 +22,15 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 exports.handler = async (event, context, callback) => {
+  console.log("Function called");
   try {
+    if (event.httpMethod !== "POST") {
+      return {
+        statusCode: 405,
+        body: "Method Not Allowed",
+      };
+    }
+
     const {amount} = JSON.parse(event.body);
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
