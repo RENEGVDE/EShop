@@ -25,5 +25,3 @@ yarn-debug.log*
 yarn-error.log*
 debug.log*
 firebase-debug.log*
-
-src/utils/firebase/firebase.utils.js
