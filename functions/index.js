@@ -18,20 +18,21 @@
 //   response.send("Hello from Firebase!");
 // });
 
+const {onCall} = require("firebase-functions/v2/https");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-exports.handler = async (event, context, callback) => {
+exports.handler = onCall(async (req, res) => {
   console.log("Function called");
   try {
-    if (event.httpMethod !== "POST") {
-      return {
-        statusCode: 405,
-        body: "Method Not Allowed",
-      };
-    }
+    // if (req.httpMethod !== "POST") {
+    //   return {
+    //     statusCode: 405,
+    //     body: "Method Not Allowed",
+    //   };
+    // }
 
-    const {amount} = JSON.parse(event.body);
+    const {amount} = JSON.parse(req.body);
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "usd",
@@ -50,4 +51,4 @@ exports.handler = async (event, context, callback) => {
       body: JSON.stringify({error}),
     };
   }
-};
+});

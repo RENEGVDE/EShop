@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getFunctions, httpsCallable } from "firebase/functions";
 import {
   getAuth,
   signInWithPopup,
@@ -36,6 +37,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebseApp = initializeApp(firebaseConfig);
+
 const analytics = getAnalytics(firebseApp);
 
 const provider = new GoogleAuthProvider();
@@ -110,3 +112,7 @@ export const signOutUser = async () => signOut(auth);
 
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+const functions = getFunctions(firebseApp);
+
+export const stripePayment = httpsCallable(functions, 'handler');

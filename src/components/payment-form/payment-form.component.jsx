@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
+import { stripePayment } from "../../utils/firebase/firebase.utils";
 import Button from "../button/button.component";
 
 import "./payment-form.styles.scss";
@@ -23,13 +24,16 @@ const PaymentForm = () => {
 
     setIsProcessingPayment(true);
 
-    const response = await fetch("/api/payment", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ amount: amount * 100 }),
-    }).then((res) => res.json());
+    // const response = await fetch("/api/payment", {
+    //   method: "post",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ amount: amount * 100 }),
+    // }).then((res) => res.json());
+
+    const response = await stripePayment(JSON.stringify({ amount: amount * 100 }))
+    .then((res) => res.json());
 
     const {
       paymentIntent: { client_secret },
@@ -60,7 +64,11 @@ const PaymentForm = () => {
       <form className="form-container" onSubmit={paymentHandler}>
         <h2>Credit Card Payment</h2>
         <CardElement />
-        <Button disabled={isProcessingPayment} type="submit" buttonType="inverted">
+        <Button
+          disabled={isProcessingPayment}
+          type="submit"
+          buttonType="inverted"
+        >
           Pay now
         </Button>
       </form>
