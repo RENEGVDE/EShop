@@ -24,7 +24,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 // const stripe = require("stripe")(`${{secrets.STRIPE_SECRET_KEY}}`);
 
 exports.handler = onCall(async (req) => {
-  console.log("Function called");
+  console.log(req.body);
   try {
     // if (req.httpMethod !== "POST") {
     //   return {
