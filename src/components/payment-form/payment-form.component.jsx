@@ -32,8 +32,9 @@ const PaymentForm = () => {
     //   body: JSON.stringify({ amount: amount * 100 }),
     // }).then((res) => res.json());
 
-    const response = await stripePayment(JSON.stringify({ amount: amount * 100 }))
-    .then((res) => res.json());
+    const response = await stripePayment(
+      JSON.stringify({ amount: amount * 100 })
+    ).then((res) => res.json());
 
     const {
       paymentIntent: { client_secret },

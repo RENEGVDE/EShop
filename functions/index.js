@@ -21,8 +21,9 @@
 const {onCall} = require("firebase-functions/v2/https");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// const stripe = require("stripe")(`${{secrets.STRIPE_SECRET_KEY}}`);
 
-exports.handler = onCall(async (req, res) => {
+exports.handler = onCall(async (req) => {
   console.log("Function called");
   try {
     // if (req.httpMethod !== "POST") {
