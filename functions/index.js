@@ -24,7 +24,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 // const stripe = require("stripe")(`${{secrets.STRIPE_SECRET_KEY}}`);
 
 exports.handler = onCall(async (req) => {
-  console.log(req.body);
+  console.log(req.data, "req.body");
   try {
     // if (req.httpMethod !== "POST") {
     //   return {
@@ -33,7 +33,7 @@ exports.handler = onCall(async (req) => {
     //   };
     // }
 
-    const {amount} = JSON.parse(req.body);
+    const {amount} = req.data;
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "usd",
@@ -44,12 +44,13 @@ exports.handler = onCall(async (req) => {
     });
     return {
       statusCode: 200,
-      body: JSON.stringify({paymentIntent}),
+      body: paymentIntent,
+
     };
   } catch (error) {
     return {
       statusCode: 400,
-      body: JSON.stringify({error}),
+      body: error,
     };
   }
 });
