@@ -26,13 +26,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 exports.handler = onCall(async (req) => {
   console.log(req.data, "req.body");
   try {
-    // if (req.httpMethod !== "POST") {
-    //   return {
-    //     statusCode: 405,
-    //     body: "Method Not Allowed",
-    //   };
-    // }
-
     const {amount} = req.data;
     const paymentIntent = await stripe.paymentIntents.create({
       amount,

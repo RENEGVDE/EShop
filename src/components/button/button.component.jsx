@@ -6,7 +6,7 @@ const BUTTON_TYPES_CLASSES = {
   default: "",
 };
 
-const Button = ({ children, buttonType, isloading, ...otherProps }) => {
+const Button = ({ children, buttonType, isloading = false, ...otherProps }) => {
   return (
     <button
       disabled={isloading}

@@ -1,8 +1,8 @@
 // import { compose, createStore, applyMiddleware } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./root-reducer";
-// import { persistStore, persistReducer } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const loggerMiddleware = (store) => (next) => (action) => {
   if (!action.type) {
@@ -21,33 +21,25 @@ const loggerMiddleware = (store) => (next) => (action) => {
   return result;
 };
 
-// const persistConfig = {
-//   key: "root",
-//   storage,
-//   blacklist: ["user"],
-//   // whitelist: ["cart"],
-// };
+const persistConfig = {
+  key: "root",
+  storage,
+  // blacklist: ["user"],
+  whitelist: ["cart"],
+};
 
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middlewares = [
   process.env.NODE_ENV !== "production" && loggerMiddleware,
 ].filter(Boolean);
 
-// const composedEhancer =
-//   (process.env.NODE_ENV !== "production" &&
-//     window &&
-//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-//   compose;
-
-// const composedEhancements = composedEhancer(applyMiddleware(...middlewares));
-
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(middlewares),
 });
 
-// export const persistor = persistStore(store);
+export const persistor = persistStore(store);

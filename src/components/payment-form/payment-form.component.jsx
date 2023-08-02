@@ -49,7 +49,7 @@ const PaymentForm = () => {
     setIsProcessingPayment(false);
 
     if (paymentResult.error) {
-      alert(paymentResult.error);
+      alert(paymentResult.error.message);
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
         alert("Payment succeeded");
@@ -62,13 +62,15 @@ const PaymentForm = () => {
       <form className="form-container" onSubmit={paymentHandler}>
         <h2>Credit Card Payment</h2>
         <CardElement />
-        <Button
-          disabled={isProcessingPayment}
-          type="submit"
-          buttonType="inverted"
-        >
-          Pay now
-        </Button>
+        <div className="payment-button">
+          <Button
+            type="submit"
+            buttonType="inverted"
+            isloading={isProcessingPayment}
+          >
+            Pay now
+          </Button>
+        </div>
       </form>
     </div>
   );
