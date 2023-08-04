@@ -1,8 +1,14 @@
 import { createSelector } from "reselect";
-import { IRootState } from "../root-reducer";
+import { ICategoriesState, IRootState } from "../root-reducer";
 import { ICategory } from "../../models/ICategory";
+import { IItem } from "../../models/IItem";
 
-const selectCategoryReducer = (state: IRootState) => state.categories;
+interface ICategoriesMap {
+  [key: string]: IItem[];
+}
+
+const selectCategoryReducer = (state: IRootState): ICategoriesState =>
+  state.categories;
 
 export const selectCategories = createSelector(
   [selectCategoryReducer],
@@ -12,7 +18,7 @@ export const selectCategories = createSelector(
 export const selectCategoriesMap = createSelector(
   [selectCategories],
   (categories) => {
-    return categories.reduce((acc: Record<string, any>, category: ICategory) => {
+    return categories.reduce((acc: ICategoriesMap, category: ICategory) => {
       const { title, items } = category;
       acc[title.toLowerCase()] = items;
       return acc;
