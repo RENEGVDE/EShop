@@ -7,21 +7,21 @@ import { ICategory } from "../models/ICategory";
 import { IItem } from "../models/IItem";
 
 export interface IRootState {
-  user: IUserState;
-  categories: ICategoriesState;
-  cart: ICartState;
+  readonly user: IUserState;
+  readonly categories: ICategoriesState;
+  readonly cart: ICartState;
 }
 export interface IUserState {
-  user: IUser | null;
+  readonly user: IUser | null;
 }
 
 export interface ICategoriesState {
-  categories: ICategory[];
+  readonly categories: ICategory[];
 }
 
 export interface ICartState {
-  isCartOpen: boolean;
-  cartItems: IItem[];
+  readonly isCartOpen: boolean;
+  readonly cartItems: IItem[];
 }
 
 export const rootReducer = combineReducers<IRootState>({

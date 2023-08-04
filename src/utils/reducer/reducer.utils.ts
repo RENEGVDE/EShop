@@ -1,5 +1,3 @@
-import { AnyAction } from "redux";
-
 export interface IAction<T> {
   type: T;
 }
