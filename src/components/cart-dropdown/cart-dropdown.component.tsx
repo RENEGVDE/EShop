@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/button/button.component";
+import Button, { ButtonTypes } from "../button/button.component";
 import CartItem from "components/cart-item/cart-item.component";
 import { selectCartItems } from "../../store/cart/cart.selector";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const CartDropdown = () => {
           <CartItem key={item.id} item={item} />
         ))}
       </div>
-      <Button buttonType="inverted" onClick={navigateToCheckout}>
+      <Button buttonType={ButtonTypes.default} onClick={navigateToCheckout}>
         GO TO CHECKOUT
       </Button>
     </div>

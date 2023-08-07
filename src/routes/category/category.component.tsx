@@ -6,8 +6,14 @@ import ProductCard from "../../components/product-card/product-card.component";
 
 import "./category.styles.scss";
 
+interface ICategoryRouteParams {
+  category: string;
+}
+
 const Category = () => {
-  const { category } = useParams();
+  const { category } = useParams<
+    keyof ICategoryRouteParams
+  >() as ICategoryRouteParams;
   const categoriesMap = useSelector(selectCategoriesMap);
   const [products, setProducts] = useState(categoriesMap[category]);
 

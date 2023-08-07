@@ -37,7 +37,7 @@ const Checkout = () => {
       <div className="total">
         <span>TOTAL: ${total}</span>
       </div>
-      <PaymentForm />
+      <PaymentForm amount={total} />
       {/* <div className='test-warning'>
                 *Please use the following test credit card for payments*
                 <br />

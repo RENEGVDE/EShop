@@ -1,47 +1,49 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { FC } from "react";
+import { useState, FormEvent } from "react";
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { stripePayment } from "../../utils/firebase/firebase.utils";
-import Button from "../button/button.component";
+import Button, { ButtonTypes } from "../button/button.component";
+import { HttpsCallableResult } from "firebase/functions";
 
 import "./payment-form.styles.scss";
 
-const PaymentForm = () => {
+interface IPaymentFormProps {
+  amount: number;
+  currentUser?: {
+    displayName: string;
+  };
+}
+
+const PaymentForm: FC<IPaymentFormProps> = () => {
   const stripe = useStripe();
   const elements = useElements();
   const amount = useSelector(selectCartTotal);
   const currentUser = useSelector(selectCurrentUser);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
-  const paymentHandler = async (event) => {
+  const paymentHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!stripe || !elements) {
-      return;
-    }
+    if (!stripe || !elements) return;
 
     setIsProcessingPayment(true);
 
-    // const response = await fetch("/api/payment", {
-    //   method: "post",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ amount: amount * 100 }),
-    // }).then((res) => res.json());
-
     const response = await stripePayment({ amount: amount * 100 });
-    const responseData = response.data;
+    const cardDetails = elements.getElement(CardElement);
 
-    const clientSecret = response.data.body.client_secret;
+    if (!cardDetails || !response) return;
+
+    const clientSecret = (response.data as { body: { client_secret: any } })
+      .body.client_secret;
 
     const paymentResult = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: elements.getElement(CardElement),
+        card: cardDetails,
         billing_details: {
-          name: currentUser ? currentUser.displayName : "Guest",
+          name: currentUser ? currentUser.name : "Guest",
         },
       },
     });
@@ -65,8 +67,8 @@ const PaymentForm = () => {
         <div className="payment-button">
           <Button
             type="submit"
-            buttonType="inverted"
-            isloading={isProcessingPayment}
+            buttonType={ButtonTypes.default}
+            isDisabled={isProcessingPayment}
           >
             Pay now
           </Button>

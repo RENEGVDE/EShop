@@ -1,4 +1,4 @@
-import Button from "components/button/button.component";
+import Button, { ButtonTypes } from "components/button/button.component";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../store/cart/cart.reducer";
 
@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
         <div className="name">{name}</div>
         <div className="price">{price}$</div>
       </div>
-      <Button buttonType="inverted" onClick={addProductToCart}>
+      <Button buttonType={ButtonTypes.default} onClick={addProductToCart}>
         Add to cart
       </Button>
     </div>

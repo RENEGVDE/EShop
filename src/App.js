@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "./store/user/user.reducer";
 import {

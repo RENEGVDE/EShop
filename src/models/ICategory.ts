@@ -4,5 +4,6 @@ export interface ICategory {
   id: number;
   title: string;
   imageUrl: string;
-  items: IItem[];
+  items?: IItem[];
+  route: string;
 }

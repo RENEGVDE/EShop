@@ -20,6 +20,9 @@ export const selectCategoriesMap = createSelector(
   (categories) => {
     return categories.reduce((acc: ICategoriesMap, category: ICategory) => {
       const { title, items } = category;
+
+      if (!items) return acc;
+
       acc[title.toLowerCase()] = items;
       return acc;
     }, {});
