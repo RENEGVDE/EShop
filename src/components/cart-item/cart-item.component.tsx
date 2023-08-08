@@ -1,6 +1,15 @@
+import { FC, memo } from "react";
+import { IItem } from "../../models/IItem";
+
 import "./cart-item.styles.scss";
 
-const CartItem = ({ item: { imageUrl, price, name, quantity } }) => {
+interface ICartItemProps {
+  item: IItem;
+}
+
+const CartItem: FC<ICartItemProps> = memo(({ item }) => {
+  const { name, imageUrl, price, quantity } = item;
+
   return (
     <div className="cart-item-container">
       <img src={imageUrl} alt={`${name}`} />
@@ -12,5 +21,5 @@ const CartItem = ({ item: { imageUrl, price, name, quantity } }) => {
       </div>
     </div>
   );
-};
+});
 export default CartItem;
