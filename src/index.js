@@ -7,6 +7,7 @@ import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "./utils/stripe/stripe.utils";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 import "./index.scss";
 
@@ -15,14 +16,16 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(
   <Provider store={store}>
     <PersistGate persistor={persistor} loading={null}>
-    <BrowserRouter>
-      <Elements stripe={stripePromise}>
-        <App />
-      </Elements>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Elements stripe={stripePromise}>
+          <App />
+        </Elements>
+      </BrowserRouter>
     </PersistGate>
   </Provider>
 );
+
+serviceWorkerRegistration.register();
 
 // const rootElement = document.getElementById("root");
 
